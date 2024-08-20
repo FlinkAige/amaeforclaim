@@ -49,13 +49,13 @@ enum class err: uint8_t {
 #define TBL struct [[eosio::table, eosio::contract("amaeforclaim")]]
 
 
-struct [[eosio::table("global2"), eosio::contract("amaeforclaim")]] global_t {
+struct [[eosio::table("global"), eosio::contract("amaeforclaim")]] global_t {
     name admin;                 
     asset total_claimed = asset(0, AMAE_SYMBOL);  
 
     EOSLIB_SERIALIZE( global_t, (admin)(total_claimed) )
 };
-typedef eosio::singleton< "global2"_n, global_t > global_singleton;
+typedef eosio::singleton< "global"_n, global_t > global_singleton;
 
 
 TBL order_t {
