@@ -80,10 +80,14 @@ public:
     ACTION claim( const name& to, const string& str_hash, const asset& quantity );
 
     ACTION init( const name& admin) {
-        require_auth( _self );
+        _check_admin( );
     
         _gstate.admin           = admin;
     }
+    private:
+     void _check_admin(){
+         CHECKC( has_auth(_self) || has_auth(_gstate.admin), err::NO_AUTH, "no auth for operate" )
+      }
 
 };
 } //namespace apollo

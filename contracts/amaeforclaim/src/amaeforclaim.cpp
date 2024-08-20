@@ -10,17 +10,16 @@ namespace amax {
 
 ACTION amaeforclaim::claim( const name& to, const string& str_hash, const asset& quantity )
 {
-   require_auth( _gstate.admin );
+   _check_admin();
 
    CHECKC( quantity.symbol == AMAE_SYMBOL, err::SYMBOL_MISMATCH, "symbol mismatch" );
 
    auto orders = order_t::idx_t(_self, _self.value);
    auto itr = orders.get_index<"hashidx"_n>();
-   CHECKC( itr.find( hash(str_hash) ) != itr.end(), err::RECORD_EXISTING, "hash already exists" );
+   CHECKC( itr.find( hash(str_hash) ) == itr.end(), err::RECORD_EXISTING, "hash already exists" );
 
    auto account_itr = orders.get_index<"accoutidx"_n>();
-   CHECKC( account_itr.find( to.value ) != account_itr.end(), err::RECORD_EXISTING, "to account already exists" );
-
+   CHECKC( account_itr.find( to.value ) == account_itr.end(), err::RECORD_EXISTING, "to account already exists" );
 
    auto now                   = current_time_point();
 
@@ -34,6 +33,7 @@ ACTION amaeforclaim::claim( const name& to, const string& str_hash, const asset&
    });
 
    TRANSFER( AMAE_BANK, to, quantity, "" );
+   _gstate.total_claimed += quantity;
 
 }
 
