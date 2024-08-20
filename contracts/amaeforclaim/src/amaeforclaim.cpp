@@ -8,7 +8,7 @@
 
 namespace amax {
 
-ACTION amaeforclaim::claim( const name& to, const string& str_hash, const asset& quantity )
+ACTION amaeforclaim::claim( const name& to, const string& str_hash, const asset& quantity,const uint32_t& needpay)
 {
    _check_admin();
 
@@ -28,14 +28,20 @@ ACTION amaeforclaim::claim( const name& to, const string& str_hash, const asset&
       row.account             = to;
       row.str_hash            = str_hash;
       row.quantity            = quantity;
+      row.status              = needpay;
       row.created_at          = now;
       row.updated_at          = now;
    });
 
-   TRANSFER( AMAE_BANK, to, quantity, "" );
-   _gstate.total_claimed += quantity;
+   if( needpay == 1 ) {
+      TRANSFER( AMAE_BANK, to, quantity, "" );
+      _gstate.total_claimed += quantity;
+   }
 
 }
+
+
+
 
 } //namespace amax
 

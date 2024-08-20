@@ -63,6 +63,7 @@ TBL order_t {
     name            account;
     string          str_hash;       //mobile_hash
     asset           quantity;   //for deposit_quantity
+    uint32_t        status;    
     time_point_sec  created_at;
     time_point_sec  updated_at;
 
@@ -73,12 +74,12 @@ TBL order_t {
     uint64_t    by_account() const { return account.value; }
     checksum256   by_hash() const { return hash(str_hash); }
 
-    typedef eosio::multi_index<"orders"_n, order_t,
+    typedef eosio::multi_index<"claimorders"_n, order_t,
         indexed_by<"accoutidx"_n, const_mem_fun<order_t, uint64_t, &order_t::by_account> >,
         indexed_by<"hashidx"_n, const_mem_fun<order_t, checksum256, &order_t::by_hash> >
     > idx_t;
 
-    EOSLIB_SERIALIZE( order_t, (id)(account)(str_hash)(quantity)(created_at)(updated_at) )
+    EOSLIB_SERIALIZE( order_t, (id)(account)(str_hash)(quantity)(status)(created_at)(updated_at) )
 };
 
 } // amax

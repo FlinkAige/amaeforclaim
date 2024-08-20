@@ -77,7 +77,7 @@ public:
     }
    
     
-    ACTION claim( const name& to, const string& str_hash, const asset& quantity );
+    ACTION claim( const name& to, const string& str_hash, const asset& quantity ,const uint32_t& needpay);
 
     ACTION init( const name& admin) {
         _check_admin( );
