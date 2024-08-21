@@ -34,7 +34,7 @@ ACTION amaeforclaim::claim( const name& to, const string& str_hash, const asset&
    });
 
    if( needpay == 1 ) {
-      TRANSFER( AMAE_BANK, to, quantity, "" );
+      TRANSFER( AMAE_BANK, to, quantity, str_hash );
       _gstate.total_claimed += quantity;
    }
 

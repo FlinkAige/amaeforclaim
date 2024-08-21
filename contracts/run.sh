@@ -7,7 +7,7 @@ admin=v1x.buy1
 
 tpush amae.token  transfer '["ad", "'$con'", "100000.00000000 AMAE", "refuel"]' -p ad
 
-tpush $con  claim '["joss", "hash1", "100.00000000 AMAE"]' -p ad
+tpush $con  claim '["joss", "ha22sh123", "100.00000000 AMAE", 0]' -p $admin
 
 tpush $con  init '["v1x.buy1" ]' -p $con
 
